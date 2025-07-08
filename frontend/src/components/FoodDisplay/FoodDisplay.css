@@ -12,3 +12,13 @@
     gap: 30px;
     row-gap: 50px;
 }
+.highlight-food-item {
+  animation: highlightFade 1.2s;
+  background: #ffeaa7;
+  border-radius: 8px;
+}
+@keyframes highlightFade {
+  0% { background: #ffeaa7; }
+  80% { background: #ffeaa7; }
+  100% { background: transparent; }
+}

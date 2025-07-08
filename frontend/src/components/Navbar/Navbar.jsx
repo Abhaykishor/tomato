@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import './Navbar.css'
 import { assets } from '../../assets/assets'
 import { Link, useNavigate } from 'react-router-dom'
@@ -7,14 +7,26 @@ import { StoreContext } from '../../Context/StoreContext'
 const Navbar = ({ setShowLogin }) => {
 
   const [menu, setMenu] = useState("home");
-  const { getTotalCartAmount, token ,setToken } = useContext(StoreContext);
+  const { getTotalCartAmount, token ,setToken, searchQuery, setSearchQuery } = useContext(StoreContext);
   const navigate = useNavigate();
+  const searchInputRef = useRef();
 
   const logout = () => {
     localStorage.removeItem("token");
     setToken("");
     navigate('/')
   }
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim() !== "") {
+      const foodSection = document.getElementById('food-display');
+      if (foodSection) {
+        foodSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      setSearchQuery("");
+    }
+  };
 
   return (
     <div className='navbar'>
@@ -26,7 +38,20 @@ const Navbar = ({ setShowLogin }) => {
         <a href='#footer' onClick={() => setMenu("contact")} className={`${menu === "contact" ? "active" : ""}`}>contact us</a>
       </ul>
       <div className="navbar-right">
-        <img src={assets.search_icon} alt="" />
+        <form onSubmit={handleSearch} style={{display:'flex',alignItems:'center',gap:'8px'}}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Search food..."
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            onFocus={() => setSearchQuery("")}
+            style={{padding:'4px 8px',borderRadius:'4px',border:'1px solid #ccc'}}
+          />
+          <button type="submit" style={{background:'none',border:'none',padding:0,cursor:'pointer'}}>
+            <img src={assets.search_icon} alt="" />
+          </button>
+        </form>
         <Link to='/cart' className='navbar-search-icon'>
           <img src={assets.basket_icon} alt="" />
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>

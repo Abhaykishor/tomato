@@ -11,6 +11,7 @@ const StoreContextProvider = (props) => {
     const [token, setToken] = useState("")
     const currency = "₹";
     const deliveryCharge = 50;
+    const [searchQuery, setSearchQuery] = useState("");
 
     const addToCart = async (itemId) => {
         if (!cartItems[itemId]) {
@@ -81,7 +82,9 @@ const StoreContextProvider = (props) => {
         loadCartData,
         setCartItems,
         currency,
-        deliveryCharge
+        deliveryCharge,
+        searchQuery,
+        setSearchQuery
     };
 
     return (
