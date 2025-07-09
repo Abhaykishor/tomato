@@ -58,7 +58,7 @@
     width: 70px;
 }
 .food-item-desc{
-    color: #676767;
+    color: var(--text-soft);
     font-size: 12px;
 }
 .food-item-price{

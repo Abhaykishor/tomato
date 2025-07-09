@@ -3,6 +3,7 @@
     font-size: max(3vw, 20px);
     text-align: center;
     font-weight: 500;
+    color: var(--text);
 }
 .app-download-platforms{
     display: flex;
@@ -15,6 +16,7 @@
    max-width: 180px;
    transition: 0.5s;
    cursor: pointer;
+   color: var(--text-soft);
 }
 .app-download-platforms img:hover{
     transform: scale(1.05);

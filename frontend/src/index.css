@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
+:root {
+  --bg: #f8fafc;
+  --bg-gradient: linear-gradient(120deg, #f8fafc 0%, #f7f0ff 100%);
+  --text: #222;
+  --text-soft: #555;
+  --card: #fff;
+  --card-glass: rgba(255,255,255,0.85);
+  --border: #f3e9ff;
+  --accent: #FFB800;
+  --accent-soft: #fffbe6;
+  --danger: #e13d13;
+  --shadow: 0 8px 32px rgba(80,80,120,0.13);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +24,8 @@
 
 body {
   min-height: 100vh;
+  background: var(--bg-gradient);
+  color: var(--text);
 }
 
 a {
@@ -20,6 +36,20 @@ a {
 .app {
   width: 80%;
   margin: auto;
+}
+
+.dark-mode {
+  --bg: #181a20;
+  --bg-gradient: linear-gradient(120deg, #181a20 0%, #23243a 100%);
+  --text: #f7f7fa;
+  --text-soft: #bdbdbd;
+  --card: #23243a;
+  --card-glass: rgba(35,36,58,0.92);
+  --border: #2d2e44;
+  --accent: #FFD700;
+  --accent-soft: #2d2e44;
+  --danger: #ff4c4c;
+  --shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 
 @keyframes fadeIn {

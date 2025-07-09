@@ -144,7 +144,8 @@ const MyOrders = () => {
             </div>
             <p><b>Order ID:</b> {selectedOrder._id} <button className="copy-btn" onClick={() => copyOrderId(selectedOrder._id)} title="Copy Order ID">📋</button></p>
             <p><b>Date:</b> {selectedOrder.createdAt ? new Date(selectedOrder.createdAt).toLocaleString() : ''}</p>
-            <p><b>Payment:</b> {selectedOrder.payment ? 'Paid 💳' : 'Not Paid'}</p>
+            <p><b>Payment:</b> {selectedOrder.payment ? 'Paid 💳' : 'Not Paid'}<br/>
+            <b>Method:</b> {selectedOrder.paymentMethod === 'cod' ? 'Cash on Delivery' : 'Razorpay'}</p>
             <div style={{marginBottom:'0.5em'}}>
               <b>Address:</b><br/>
               {selectedOrder.address && (

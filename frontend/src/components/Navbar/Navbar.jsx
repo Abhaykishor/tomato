@@ -10,6 +10,16 @@ const Navbar = ({ setShowLogin }) => {
   const { getTotalCartAmount, token ,setToken, searchQuery, setSearchQuery } = useContext(StoreContext);
   const navigate = useNavigate();
   const searchInputRef = useRef();
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+
+  useEffect(() => {
+    if (darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+    localStorage.setItem('darkMode', darkMode);
+  }, [darkMode]);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -38,6 +48,13 @@ const Navbar = ({ setShowLogin }) => {
         <a href='#footer' onClick={() => setMenu("contact")} className={`${menu === "contact" ? "active" : ""}`}>contact us</a>
       </ul>
       <div className="navbar-right">
+        <button
+          style={{marginRight:12,background:'none',border:'none',fontSize:22,cursor:'pointer'}}
+          title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          onClick={() => setDarkMode(dm => !dm)}
+        >
+          {darkMode ? '🌙' : '☀️'}
+        </button>
         <form onSubmit={handleSearch} style={{display:'flex',alignItems:'center',gap:'8px'}}>
           <input
             ref={searchInputRef}
@@ -56,7 +73,7 @@ const Navbar = ({ setShowLogin }) => {
           <img src={assets.basket_icon} alt="" />
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>
         </Link>
-        {!token ? <button onClick={() => setShowLogin(true)}>sign in</button>
+        {!token ? <button className="navbar-signin-btn" onClick={() => setShowLogin(true)}>sign in</button>
           : <div className='navbar-profile'>
             <img src={assets.profile_icon} alt="" />
             <ul className='navbar-profile-dropdown'>

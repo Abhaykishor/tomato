@@ -3,9 +3,16 @@ body, .my-orders {
   background: linear-gradient(120deg, #f8fafc 0%, #f7f0ff 100%);
 }
 .my-orders {
+  background: var(--bg);
+  color: var(--text);
   padding: 2.5rem 0 3rem 0;
   min-height: 100vh;
   animation: fadeIn 0.7s;
+}
+.my-orders > h2 {
+  position: relative;
+  z-index: 50;
+  margin-bottom: 2.5rem;
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(30px); }
@@ -261,17 +268,23 @@ body, .my-orders {
   animation: fadeIn 0.3s;
 }
 .order-modal {
-  background: rgba(255,255,255,0.97);
+  background: var(--card);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
   padding: 2.2rem 2.7rem;
   min-width: 340px;
   max-width: 95vw;
-  box-shadow: 0 8px 32px rgba(255,184,0,0.13);
+  box-shadow: 0 8px 32px var(--shadow);
   position: relative;
   animation: fadeIn 0.3s;
   font-family: 'Poppins', 'Inter', Arial, sans-serif;
-  border: 1.5px solid #f3e9ff;
   backdrop-filter: blur(8px);
+  color: var(--text);
+  max-height: 90vh;
+  overflow-y: auto !important;
+}
+.order-modal::-webkit-scrollbar {
+  display: none !important;
 }
 .order-modal-header {
   display: flex;
@@ -283,7 +296,7 @@ body, .my-orders {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: #FFB800;
+  color: var(--text);
 }
 .order-modal-status-bar {
   margin: 1rem 0 0.5rem 0;
@@ -332,6 +345,7 @@ body, .my-orders {
   padding: 7px 14px;
   text-align: left;
   font-size: 15px;
+  color: var(--text);
 }
 .copy-btn {
   background: #fffbe6;

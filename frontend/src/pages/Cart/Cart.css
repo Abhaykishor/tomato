@@ -12,13 +12,13 @@
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
-    color: grey;
+    color: var(--text);
     font-size: max(1vw, 12px);
 }
 
 .cart-items-item {
     margin: 10px 0px;
-    color: black;
+    color: var(--text);
 }
 
 .cart-items-item img {
@@ -52,7 +52,7 @@
 .cart-total-details {
     display: flex;
     justify-content: space-between;
-    color: #555555;
+    color: var(--text-soft);
 }
 
 .cart-total hr {
@@ -73,7 +73,7 @@
     flex: 1;
 }
 .cart-promocode p{
-    color: #555555;
+    color: var(--text-soft);
 }
 .cart-promocode-input{
     margin-top: 10px;

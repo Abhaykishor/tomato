@@ -9,7 +9,7 @@
 }
 .explore-menu-text{
     max-width: 60%;
-    color: #808080;
+    color: var(--text);
 }
 .explore-menu-list{
     display: flex;
@@ -51,7 +51,7 @@
 }
 .explore-menu-list-item p{
     margin-top: 10px;
-    color: #747474;
+    color: var(--text-soft);
     font-size: max(1.4vw,16px);
     cursor: pointer;
 }
