@@ -12,6 +12,7 @@ const StoreContextProvider = (props) => {
     const currency = "₹";
     const deliveryCharge = 50;
     const [searchQuery, setSearchQuery] = useState("");
+    const [menuCategories, setMenuCategories] = useState([]);
 
     const addToCart = async (itemId) => {
         if (!cartItems[itemId]) {
@@ -53,6 +54,11 @@ const StoreContextProvider = (props) => {
         setFoodList(response.data.data)
     }
 
+    const fetchMenuCategories = async () => {
+        const response = await axios.get(url + "/api/category/list");
+        setMenuCategories(response.data.data);
+    }
+
     const loadCartData = async (token) => {
         const response = await axios.post(url + "/api/cart/get", {}, { headers: token });
         setCartItems(response.data.cartData);
@@ -61,6 +67,7 @@ const StoreContextProvider = (props) => {
     useEffect(() => {
         async function loadData() {
             await fetchFoodList();
+            await fetchMenuCategories();
             if (localStorage.getItem("token")) {
                 setToken(localStorage.getItem("token"))
                 await loadCartData({ token: localStorage.getItem("token") })
@@ -84,7 +91,8 @@ const StoreContextProvider = (props) => {
         currency,
         deliveryCharge,
         searchQuery,
-        setSearchQuery
+        setSearchQuery,
+        menuCategories
     };
 
     return (

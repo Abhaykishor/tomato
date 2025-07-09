@@ -19,8 +19,7 @@ const Order = () => {
   }
 
   const statusHandler = async (event, orderId) => {
-    console.log(event, orderId);
-    const response = await axios.post(`${url}/api/order/status`, {
+    const response = await axios.post(`${url}/api/order/updatestatus`, {
       orderId,
       status: event.target.value
     })
@@ -28,6 +27,29 @@ const Order = () => {
       await fetchAllOrders();
     }
   }
+
+  const deleteOrder = async (orderId) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return;
+    const response = await axios.post(`${url}/api/order/delete`, { orderId });
+    if (response.data.success) {
+      let undoTimeout;
+      const undo = async () => {
+        clearTimeout(undoTimeout);
+        await axios.post(`${url}/api/order/restore`, { orderId });
+        toast.success('Order restored');
+        fetchAllOrders();
+      };
+      toast(
+        <span>
+          Order deleted. <button style={{color:'#FF4C24',background:'none',border:'none',cursor:'pointer',fontWeight:600}} onClick={undo}>Undo</button>
+        </span>,
+        { autoClose: 8000 }
+      );
+      undoTimeout = setTimeout(fetchAllOrders, 8000);
+    } else {
+      toast.error('Failed to delete order');
+    }
+  };
 
 
   useEffect(() => {
@@ -66,6 +88,7 @@ const Order = () => {
               <option value="Out for delivery">Out for delivery</option>
               <option value="Delivered">Delivered</option>
             </select>
+            <button className="order-delete-btn" onClick={() => deleteOrder(order._id)}>Delete</button>
           </div>
         ))}
       </div>

@@ -71,7 +71,7 @@ const placeOrderCod = async (req, res) => {
 // Listing Order for Admin panel
 const listOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({});
+        const orders = await orderModel.find({ deleted: false });
         res.json({ success: true, data: orders })
     } catch (error) {
         console.log(error);
@@ -82,7 +82,7 @@ const listOrders = async (req, res) => {
 // User Orders for Frontend
 const userOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({ userId: req.body.userId });
+        const orders = await orderModel.find({ userId: req.body.userId, deleted: false });
         res.json({ success: true, data: orders })
     } catch (error) {
         console.log(error);
@@ -118,4 +118,21 @@ const verifyOrder = async (req, res) => {
 
 }
 
-export { placeOrder, listOrders, userOrders, updateStatus, verifyOrder, placeOrderCod }
+const deleteOrder = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, { deleted: true });
+        res.json({ success: true, message: "Order deleted (soft)" });
+    } catch (error) {
+        res.json({ success: false, message: "Error deleting order" });
+    }
+}
+const restoreOrder = async (req, res) => {
+    try {
+        await orderModel.findByIdAndUpdate(req.body.orderId, { deleted: false });
+        res.json({ success: true, message: "Order restored" });
+    } catch (error) {
+        res.json({ success: false, message: "Error restoring order" });
+    }
+}
+
+export { placeOrder, listOrders, userOrders, updateStatus, verifyOrder, placeOrderCod, deleteOrder, restoreOrder }
