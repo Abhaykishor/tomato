@@ -11,6 +11,8 @@ const Navbar = ({ setShowLogin }) => {
   const navigate = useNavigate();
   const searchInputRef = useRef();
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownTimeout = useRef();
 
   useEffect(() => {
     if (darkMode) {
@@ -36,6 +38,17 @@ const Navbar = ({ setShowLogin }) => {
       }
       setSearchQuery("");
     }
+  };
+
+  const handleProfileMouseEnter = () => {
+    clearTimeout(dropdownTimeout.current);
+    setDropdownOpen(true);
+  };
+  const handleProfileMouseLeave = () => {
+    dropdownTimeout.current = setTimeout(() => setDropdownOpen(false), 220);
+  };
+  const handleProfileClick = () => {
+    setDropdownOpen((open) => !open);
   };
 
   return (
@@ -74,9 +87,20 @@ const Navbar = ({ setShowLogin }) => {
           <div className={getTotalCartAmount() > 0 ? "dot" : ""}></div>
         </Link>
         {!token ? <button className="navbar-signin-btn" onClick={() => setShowLogin(true)}>sign in</button>
-          : <div className='navbar-profile'>
+          : <div className='navbar-profile'
+              onMouseEnter={handleProfileMouseEnter}
+              onMouseLeave={handleProfileMouseLeave}
+              tabIndex={0}
+              onClick={handleProfileClick}
+              style={{cursor:'pointer'}}
+            >
             <img src={assets.profile_icon} alt="" />
-            <ul className='navbar-profile-dropdown'>
+            <ul className='navbar-profile-dropdown' style={{
+              opacity: dropdownOpen ? 1 : 0,
+              pointerEvents: dropdownOpen ? 'auto' : 'none',
+              transform: dropdownOpen ? 'translateY(0) scale(1)' : 'translateY(-10px) scale(0.98)',
+              transition: 'opacity 0.22s cubic-bezier(.4,0,.2,1), transform 0.22s cubic-bezier(.4,0,.2,1)'
+            }}>
               <li onClick={()=>navigate('/myorders')}> <img src={assets.bag_icon} alt="" /> <p>Orders</p></li>
               <hr />
               <li onClick={logout}> <img src={assets.logout_icon} alt="" /> <p>Logout</p></li> 
