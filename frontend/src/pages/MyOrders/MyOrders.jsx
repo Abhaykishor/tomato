@@ -16,16 +16,23 @@ const MyOrders = () => {
   const [data, setData] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { url, token, currency, setCartItems } = useContext(StoreContext);
 
   const fetchOrders = async () => {
-    const response = await axios.post(url + "/api/order/userorders", {}, { headers: { token } });
-    setData(response.data.data)
+    try {
+      const response = await axios.post(url + "/api/order/userorders", {}, { headers: { token } });
+      setData(response.data.data)
+    } catch (error) {
+      setData([]);
+    }
   }
 
   useEffect(() => {
     if (token) {
-      fetchOrders();
+      fetchOrders().finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
   }, [token])
 
@@ -78,6 +85,9 @@ const MyOrders = () => {
     navigator.clipboard.writeText(id);
     alert('Order ID copied!');
   };
+
+  if (loading) return <div style={{padding:'2rem',textAlign:'center'}}>Loading...</div>;
+  if (!token) return <div style={{padding:'2rem',textAlign:'center'}}>Please sign in to view your orders.</div>;
 
   return (
     <div className='my-orders'>
