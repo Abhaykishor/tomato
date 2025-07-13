@@ -82,7 +82,8 @@ const listOrders = async (req, res) => {
 // User Orders for Frontend
 const userOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({ userId: req.body.userId, deleted: false });
+        const userId = req.body.userId; // set by authMiddleware
+        const orders = await orderModel.find({ userId, deleted: false });
         res.json({ success: true, data: orders })
     } catch (error) {
         console.log(error);
